@@ -21,4 +21,9 @@ export const Input = styled.input`
     outline: 2px solid ${theme.colors.danger.main} !important;
   `};
 
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.gray[100]};
+    outline: 2px solid ${({ theme }) => theme.colors.gray[200]}};
+  }
+
 `;
