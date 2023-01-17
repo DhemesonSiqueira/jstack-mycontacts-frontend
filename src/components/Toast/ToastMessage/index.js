@@ -9,7 +9,6 @@ import checkCircleIcon from '../../../assets/images/check-circle.svg';
 export default function ToastMessage({ message, onRemoveMessage }) {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      console.log('Time executou');
       onRemoveMessage(message.id);
     }, message.duration || 5000);
 
