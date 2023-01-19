@@ -14,9 +14,10 @@ import {
   EmptyListContainer,
   SearchNotFoundContainer,
 } from './styles';
+import ContactsService from '../../services/ContactsService';
 import { Button } from '../../components/Button';
 import Loader from '../../components/Loader';
-import ContactsService from '../../services/ContactsService';
+import Modal from '../../components/Modal';
 
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
@@ -71,6 +72,17 @@ export default function Home() {
   return (
     <Container>
       <Loader isLoading={isLoading} />
+
+      <Modal
+        danger
+        title='Tem certeza que deseja remover o contato "Dhemeson"'
+        confirmLabel="Deletar"
+        onCancel={() => { alert('Cancelou'); }}
+        onConfirm={() => { alert('Confirmou'); }}
+      >
+        <h1>corpo do modal</h1>
+
+      </Modal>
 
       { contacts.length > 0 && (
         <InputSearchContainer>
