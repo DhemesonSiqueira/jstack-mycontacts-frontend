@@ -48,6 +48,7 @@ export default function useHome() {
   }
 
   function handleTryAgain() {
+    console.log('Tentanto novamente');
     loadContacts();
   }
 
