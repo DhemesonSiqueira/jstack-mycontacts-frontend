@@ -24,12 +24,12 @@ export default function useHome() {
       setIsLoading(true);
 
       const contactsList = await ContactsService.listContacts(orderBy);
-      // const contactsList = []; await ContactsService.listContacts(orderBy);
 
       setHasError(false);
       setContacts(contactsList);
     } catch (error) {
       setHasError(true);
+      setContacts([]);
     } finally {
       setIsLoading(false);
     }
@@ -48,7 +48,6 @@ export default function useHome() {
   }
 
   function handleTryAgain() {
-    console.log('Tentanto novamente');
     loadContacts();
   }
 
