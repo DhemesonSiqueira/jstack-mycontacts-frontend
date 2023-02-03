@@ -6,6 +6,8 @@ import { Container } from './styles';
 import { toastEventManager } from '../../../utils/toast';
 
 export default function ToastContainer() {
+  const [pendingRemovalMessagesId, setPendingRemovalMessagesId] = useState([]);
+
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -26,10 +28,19 @@ export default function ToastContainer() {
   }, []);
 
   const handleRemoveMessage = useCallback((id) => {
-    setMessages((prevState) => prevState.filter(
-      (message) => message.id !== id,
-    ));
+    setPendingRemovalMessagesId(
+      (prevState) => [...prevState, id],
+    );
   }, []);
+
+  const handleAnimationEnd = useCallback((id) => {
+    setMessages((prevState) => prevState.filter((message) => message.id !== id));
+    setPendingRemovalMessagesId(
+      (prevState) => prevState.filter((messageId) => messageId !== id),
+    );
+  }, []);
+
+  console.log({ messages, pendingRemovalMessagesId });
 
   return (
     <Container>
@@ -38,6 +49,8 @@ export default function ToastContainer() {
           key={message.id}
           message={message}
           onRemoveMessage={handleRemoveMessage}
+          isLeaving={pendingRemovalMessagesId.includes(message.id)}
+          onAnimationEnd={handleAnimationEnd}
         />
       ))}
     </Container>
