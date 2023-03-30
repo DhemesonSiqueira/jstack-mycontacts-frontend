@@ -25,7 +25,7 @@ export default function useContactForm(onSubmit, ref) {
   const isFormValid = (name && errors.length === 0);
 
   useImperativeHandle(ref, () => ({
-    setFildsValues: (contact) => {
+    setFieldsValues: (contact) => {
       setName(contact.name ?? '');
       setEmail(contact.email ?? '');
       setPhone(formatPhone(contact.phone) ?? '');
@@ -41,9 +41,11 @@ export default function useContactForm(onSubmit, ref) {
   }), []);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function loadCategories() {
       try {
-        const categoriesList = await CategoriesService.listCategories();
+        const categoriesList = await CategoriesService.listCategories(controller.signal);
 
         setCategories(categoriesList);
       } catch {} finally {
@@ -51,6 +53,10 @@ export default function useContactForm(onSubmit, ref) {
       }
     }
     loadCategories();
+
+    return () => {
+      controller.abort();
+    };
   }, [setCategories, setIsLoadingCategories]);
 
   function handleNameChange(event) {
